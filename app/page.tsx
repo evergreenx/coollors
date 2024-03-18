@@ -1,38 +1,69 @@
 "use client";
 
+import { BLUR_BUTTON_VARIANT, FADE_DOWN_ANIMATION_VARIANTS } from "@/variant";
+import { motion } from "framer-motion";
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen   items-center justify-around   p-24">
-      <div className="w-[calc(100% - 1100px + 180px)]">
-        <h1 className="text-7xl max-w-[500px] tracking-tight mx-auto font-black text-center mb-[30px]">
+    <main className="flex min-h-screen lg:flex-row  flex-col-reverse  items-center justify-around   p-24">
+      <motion.div
+        className="w-[calc(100% - 1100px + 180px)]"
+        initial="hidden"
+        animate="show"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          show: {
+            transition: {
+              staggerChildren: 0.15,
+            },
+          },
+        }}
+      >
+        <motion.h1
+          variants={FADE_DOWN_ANIMATION_VARIANTS}
+          className="lg:text-7xl text-4xl max-w-[500px] tracking-tight mx-auto font-black text-center mb-[30px]"
+        >
           The super fast color palettes generator!
-        </h1>
+        </motion.h1>
 
-        <p className="text-lg max-w-[400px] mb-[35px] mx-auto font-medium text-[#464853] text-center  ">
+        <motion.p
+          variants={FADE_DOWN_ANIMATION_VARIANTS}
+          className="text-lg max-w-[400px] mb-[35px] mx-auto font-medium text-[#464853] text-center  "
+        >
           Create the prefect palette or get inspired by thousnands of beautiful
           color schemes.
-        </p>
+        </motion.p>
 
         <div className="w-[260px] mx-auto">
-          <button
+          <motion.button
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 1, delay: 0.5 }}
+            variants={BLUR_BUTTON_VARIANT}
             className="bg-[#0066ff] w-full text-white
         font-semibold
         
         h-[46px] px-[21px] my-3  rounded-lg"
           >
-            Start the generator!
-          </button>
+            <Link href={"/generate"}>Start the generator!</Link>
+          </motion.button>
 
-          <button
+          <motion.button
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 1, delay: 0.8 }}
+            variants={BLUR_BUTTON_VARIANT}
             className="text-black w-full  border border-[#d8d8da]         font-semibold
         h-[46px] px-[21px] my-3  rounded-lg"
           >
             Explore trending palettes
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="w-1/2 xl:p-32 p-24 xl:mt-0 mt-32 md:block hidden">
+      <div className="w-1/2 xl:p-32 lg:mb-0 mb-10 xl:mt-0 lg:mt-32 mt-5  ">
         <svg
           version="1.1"
           id="homepage_hero_image-mobile"
