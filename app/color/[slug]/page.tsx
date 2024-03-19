@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { ViewDialog } from "@/components/view-dialog";
+import { handleColorTextClass } from "@/lib/utils";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -27,7 +28,7 @@ export default function Page({
   };
 }) {
   const selecteColors = params.slug;
-  console.log(params.slug);
+
 
   random().toHex();
 
@@ -41,10 +42,6 @@ export default function Page({
     return colord(addHex).toName({ closest: true });
   };
 
-  const handleColorTextClass = (color: string) => {
-    const luminance = colord(`#${color}`).luminance();
-    return luminance < 0.3 ? "text-white" : "text-black";
-  };
   return (
     <div className="h-screen overflow-hidden">
       <div className="flex justify-end w-full">

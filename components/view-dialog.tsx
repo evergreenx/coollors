@@ -23,6 +23,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import QuickView from "./quick-view";
+import { X } from "lucide-react";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export function ViewDialog({ colors }: { colors: string[] }) {
   const [open, setOpen] = React.useState(false);
@@ -35,14 +37,16 @@ export function ViewDialog({ colors }: { colors: string[] }) {
           <Button variant="outline">View</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader className="p-3">
-            <DialogTitle className="text-center">Quick view</DialogTitle>
-
+          <DialogHeader className="px-2 pt-1 flex justify-center">
+            <DialogClose asChild className="absolute cursor-pointer ">
+              <X width={20} />
+            </DialogClose>
+            <DialogTitle className="text-center text-base">
+              Quick view
+            </DialogTitle>
           </DialogHeader>
 
-
           <QuickView colors={colors} />
-
         </DialogContent>
       </Dialog>
     );
@@ -60,10 +64,6 @@ export function ViewDialog({ colors }: { colors: string[] }) {
 
         <div className=""></div>
         <QuickView colors={colors} />
-
-     
-      
-     
       </DrawerContent>
     </Drawer>
   );

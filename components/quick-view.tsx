@@ -1,4 +1,5 @@
 "use client";
+import { handleColorTextClass } from "@/lib/utils";
 import React, { useState } from "react";
 
 export default function QuickView({ colors }: { colors: string[] }) {
@@ -9,7 +10,10 @@ export default function QuickView({ colors }: { colors: string[] }) {
         style={{
           backgroundColor: `#${selectedColor}`,
         }}
-        className=" no-scrollbar overflow-auto max-h-36  m-0 p-3 w-full"
+        className={` no-scrollbar overflow-auto max-h-36  m-0 p-3 w-full ${handleColorTextClass(
+          selectedColor
+        )}
+`}
       >
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo incidunt
         fugiat tenetur aut consequatur optio molestiae est voluptas veritatis,
