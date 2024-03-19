@@ -2,6 +2,9 @@ import { useParams } from "next/navigation";
 import React from "react";
 import { colord, extend, random } from "colord";
 import namesPlugin from "colord/plugins/names";
+import a11yPlugin from "colord/plugins/a11y";
+
+extend([a11yPlugin]);
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { ViewDialog } from "@/components/view-dialog";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -36,49 +40,47 @@ export default function Page({
 
     return colord(addHex).toName({ closest: true });
   };
+
+  const handleColorTextClass = (color: string) => {
+    const luminance = colord(`#${color}`).luminance();
+    return luminance < 0.3 ? "text-white" : "text-black";
+  };
   return (
-    <div className="h-screen">
-      <AlertDialog>
-        <AlertDialogTrigger>
-          Open
-          <EyeIcon />
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+    <div className="h-screen overflow-hidden">
+     
+
+     <ViewDialog />
 
       <div className="flex">
         {colors.map((color: string, index: number) => (
           <div
             key={index}
-            className="w-full h-screen flex px-[5px]"
+            className="w-full h-screen flex px-[5px] relative"
             style={{
               backgroundColor: `#${color}`,
             }}
           >
-            <div className="self-end flex justify-center items-center flex-col w-full mb-1 ">
-              <h3 className=" text-[30px] font-semibold  text-white ">
+            <div className=" absolute bottom-16 left-0  flex  items-center flex-col w-full mb-1">
+              <h3
+                className={` text-[30px] uppercase font-semibold ${handleColorTextClass(
+                  color
+                )}
+ `}
+              >
                 {color}
               </h3>
 
-              <p className=" text-[11px] opacity-[0.5] capitalize inset-0 text-white mt-[9px] ">
+              <p
+                className={` ${handleColorTextClass(
+                  color
+                )} text-[11px] opacity-[0.5] capitalize inset-0 mt-[9px] `}
+              >
                 {handleColorName(color)}
               </p>
             </div>
           </div>
         ))}
-      </div>
+      V</div>
     </div>
   );
 }
