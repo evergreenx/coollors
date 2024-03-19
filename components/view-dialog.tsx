@@ -24,25 +24,25 @@ import {
 } from "@/components/ui/drawer";
 import QuickView from "./quick-view";
 
-export function ViewDialog() {
+export function ViewDialog({ colors }: { colors: string[] }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
+        <DialogTrigger className="" asChild>
+          <Button variant="outline">View</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
+          <DialogHeader className="p-3">
+            <DialogTitle className="text-center">Quick view</DialogTitle>
 
-            <QuickView />
           </DialogHeader>
+
+
+          <QuickView colors={colors} />
+
         </DialogContent>
       </Dialog>
     );
@@ -51,21 +51,19 @@ export function ViewDialog() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">View</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DrawerDescription>
+          <DrawerTitle>Quick view</DrawerTitle>
         </DrawerHeader>
 
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        <div className=""></div>
+        <QuickView colors={colors} />
+
+     
+      
+     
       </DrawerContent>
     </Drawer>
   );

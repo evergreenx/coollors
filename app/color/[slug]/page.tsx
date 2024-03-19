@@ -47,15 +47,15 @@ export default function Page({
   };
   return (
     <div className="h-screen overflow-hidden">
-     
+      <div className="flex justify-end w-full">
+        <ViewDialog colors={colors} />
+      </div>
 
-     <ViewDialog />
-
-      <div className="flex">
+      <div className="flex lg:flex-row flex-col">
         {colors.map((color: string, index: number) => (
           <div
             key={index}
-            className="w-full h-screen flex px-[5px] relative"
+            className="w-full lg:h-screen h-40 flex px-[5px] relative"
             style={{
               backgroundColor: `#${color}`,
             }}
@@ -80,7 +80,7 @@ export default function Page({
             </div>
           </div>
         ))}
-      V</div>
+      </div>
     </div>
   );
 }
