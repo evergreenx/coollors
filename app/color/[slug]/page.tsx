@@ -7,6 +7,7 @@ import { ViewDialog } from "@/components/view-dialog";
 import { handleColorTextClass } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Options from "@/components/options";
+import { useMediaQuery } from "@/hooks/use-media-query";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -15,9 +16,11 @@ export default function Page({
     slug: string;
   };
 }) {
-  const selecteColors = params.slug;
+  const generatedColors = params.slug;
 
-  const colors: undefined | any = selecteColors && selecteColors.split("-");
+  // TODO - fix type
+
+  const colors: undefined | string[]   = generatedColors && generatedColors.split("-");
 
   const handleColorName = (colorHex: string) => {
     let addHex: string = `#${colorHex}`;
@@ -39,6 +42,8 @@ export default function Page({
     },
   };
 
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   return (
     <div className="h-screen overflow-hidden">
       <div className="flex justify-end w-full">
@@ -57,9 +62,13 @@ export default function Page({
               backgroundColor: `#${color}`,
             }}
           >
-            <motion.div variants={childvariant} className="">
+            {isDesktop ? (
+              <motion.div variants={childvariant} className="">
+                <Options color={color} />
+              </motion.div>
+            ) : (
               <Options color={color} />
-            </motion.div>
+            )}
 
             <div
               className={`lg:absolute static bottom-16 left-0  flex
