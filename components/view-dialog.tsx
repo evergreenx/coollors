@@ -25,6 +25,8 @@ import {
 import QuickView from "./quick-view";
 import { X } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import EyeIcon from "@/assets/eye-open.svg";
+import Image from "next/image";
 
 export function ViewDialog({ colors }: { colors: string[] }) {
   const [open, setOpen] = React.useState(false);
@@ -34,7 +36,10 @@ export function ViewDialog({ colors }: { colors: string[] }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="" asChild>
-          <Button variant="outline">View</Button>
+          <Button variant="outline">
+            <Image src={EyeIcon} alt="" className="mr-2" />
+            View
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader className="px-2 pt-1 flex justify-center">
