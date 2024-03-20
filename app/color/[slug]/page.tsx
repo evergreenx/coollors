@@ -6,7 +6,7 @@ import namesPlugin from "colord/plugins/names";
 import { ViewDialog } from "@/components/view-dialog";
 import { handleColorTextClass } from "@/lib/utils";
 import { motion } from "framer-motion";
-import Options from '@/components/options'
+import Options from "@/components/options";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -52,20 +52,26 @@ export default function Page({
             initial={"start"}
             variants={variant}
             whileHover={"show"}
-            className="w-full lg:h-screen h-40 flex justify-center items-center px-[5px] relative"
+            className="w-full lg:h-screen h-40 flex flex-row-reverse justify-center items-center px-[5px] relative"
             style={{
               backgroundColor: `#${color}`,
             }}
           >
             <motion.div variants={childvariant} className="">
-         <Options />
+              <Options color={color} />
             </motion.div>
 
-            <div className=" absolute bottom-16 left-0  flex  items-center flex-col w-full mb-1">
+            <div
+              className={`lg:absolute static bottom-16 left-0  flex
+            ${
+              handleColorTextClass(color) === "white"
+                ? "text-white"
+                : "text-black"
+            }
+            lg:items-center flex-col w-full mb-1`}
+            >
               <h3
-                className={` text-[30px] uppercase font-semibold ${handleColorTextClass(
-                  color
-                )}
+                className={` text-[30px] uppercase font-semibold 
  `}
               >
                 {color}

@@ -16,9 +16,11 @@ export default function QuickView({ colors }: { colors: string[] }) {
         style={{
           backgroundColor: `#${selectedColor}`,
         }}
-        className={` no-scrollbar overflow-auto max-h-52  m-0 p-3 w-full ${handleColorTextClass(
-          selectedColor
-        )}
+        className={` no-scrollbar overflow-auto max-h-52 font-medium m-0 p-3 w-full ${
+          handleColorTextClass(selectedColor) === "white"
+            ? "text-white"
+            : "text-black"
+        }
 `}
       >
         <div className="p-[12px] cursor-pointer rounded-lg hover:bg-[#ffffff0d] ">
@@ -62,7 +64,15 @@ export default function QuickView({ colors }: { colors: string[] }) {
               className="flex-1 flex justify-center items-center cursor-pointer w-fit first:rounded-l-lg last:rounded-r-lg   h-[42px]"
             >
               {selectedColor === color && (
-                <div className="h-2 w-2 rounded-full bg-black"></div>
+                <div
+                  className={`
+                ${
+                  handleColorTextClass(color) === "white"
+                    ? "bg-white"
+                    : "bg-black"
+                }
+                h-2 w-2 rounded-full bg-black`}
+                ></div>
               )}
             </div>
           );

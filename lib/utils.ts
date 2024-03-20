@@ -11,5 +11,5 @@ extend([a11yPlugin]);
 
 export const handleColorTextClass = (color: string) => {
   const luminance = colord(`#${color}`).luminance();
-  return luminance < 0.3 ? "text-white" : "text-black";
+  return luminance < 0.3 ? "white" : "black";
 };
