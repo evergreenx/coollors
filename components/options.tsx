@@ -3,8 +3,15 @@ import { CopyIcon, CancelIcon, DragIcon, LockIcon, OpenIcon } from "./icons";
 import { handleColorTextClass } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import { Reorder, useDragControls } from "framer-motion";
 
-export default function Options({ color }: { color: string }) {
+export default function Options({
+  color,
+  controls,
+}: {
+  color: string;
+  controls: any;
+}) {
   const currentColor =
     handleColorTextClass(color) === "white" ? "white" : "black";
 
@@ -31,7 +38,18 @@ export default function Options({ color }: { color: string }) {
         )}
         <CopyIcon currentColor={currentColor} />
         <OpenIcon currentColor={currentColor} />
-        <DragIcon currentColor={currentColor} />
+
+        <div
+          onPointerDown={(e) => {
+            controls.start(e);
+
+            e.preventDefault();
+          }}
+          className=""
+        >
+          <DragIcon currentColor={currentColor} />
+        </div>
+
         <LockIcon currentColor={currentColor} />
       </div>
     </div>
