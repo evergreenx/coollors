@@ -36,7 +36,7 @@ export function ViewDialog({ colors }: { colors: string[] }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="" asChild>
-          <Button variant="outline">
+          <Button className="border-none" variant="outline">
             <Image src={EyeIcon} alt="" className="mr-2" />
             View
           </Button>

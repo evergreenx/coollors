@@ -3,19 +3,35 @@ import { CopyIcon, CancelIcon, DragIcon, LockIcon, OpenIcon } from "./icons";
 import { handleColorTextClass } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
-import { Reorder, useDragControls } from "framer-motion";
+import { DragControls, Reorder, useDragControls } from "framer-motion";
 
+import useCopy from "@/hooks/use-copy";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 export default function Options({
   color,
   controls,
+  toogleHex,
+  lockedHexes,
 }: {
   color: string;
-  controls: any;
+  controls: DragControls;
+  toogleHex: (color: string) => void;
+  lockedHexes: string[];
 }) {
   const currentColor =
     handleColorTextClass(color) === "white" ? "white" : "black";
 
   const router = useRouter();
+
+  const textToCopy = 'Hello, world!';
+
+  const [copy ] = useCopy();
 
   const { slug } = useParams<{ slug: string }>();
 
@@ -28,16 +44,40 @@ export default function Options({
 
     router.replace(newRoute);
   };
+
+  const handleHexCopy = (color: string) => {
+    copy(textToCopy)
+  };
   return (
     <div>
       <div className="flex flex-col space-y-4 ">
         {slug.split("-").length > 2 && (
           <div onClick={() => handleRemoveColor(color)} className="m">
-            <CancelIcon currentColor={currentColor} />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  {" "}
+                  <CancelIcon currentColor={currentColor} />
+                </TooltipTrigger>
+
+                <TooltipContent>Remove</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         )}
-        <CopyIcon currentColor={currentColor} />
-        <OpenIcon currentColor={currentColor} />
+
+        <div onClick={() => handleHexCopy(color)} className="">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                {" "}
+                <CopyIcon currentColor={currentColor} />
+              </TooltipTrigger>
+
+              <TooltipContent>Copy Hex</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
 
         <div
           onPointerDown={(e) => {
@@ -47,10 +87,33 @@ export default function Options({
           }}
           className=""
         >
-          <DragIcon currentColor={currentColor} />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                {" "}
+                <DragIcon currentColor={currentColor} />
+              </TooltipTrigger>
+
+              <TooltipContent>Drag</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
-        <LockIcon currentColor={currentColor} />
+        <div onClick={() => toogleHex(color)} className="">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                {lockedHexes?.includes(color) ? (
+                  <LockIcon currentColor={currentColor} />
+                ) : (
+                  <OpenIcon currentColor={currentColor} />
+                )}
+              </TooltipTrigger>
+
+              <TooltipContent>Togle lock</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
     </div>
   );

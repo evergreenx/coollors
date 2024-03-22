@@ -37,7 +37,7 @@ const CopyIcon = ({ currentColor }: IconType) => (
   </svg>
 );
 
-const OpenIcon = ({ currentColor }: IconType) => (
+const LockIcon = ({ currentColor }: IconType) => (
   <svg
     stroke={currentColor}
     fill={currentColor}
@@ -52,7 +52,7 @@ const OpenIcon = ({ currentColor }: IconType) => (
   </svg>
 );
 
-const LockIcon = ({ currentColor }: IconType) => (
+const OpenIcon = ({ currentColor }: IconType) => (
   <svg
     stroke="currentColor"
     fill={currentColor}
