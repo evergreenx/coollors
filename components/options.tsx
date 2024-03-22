@@ -53,7 +53,7 @@ export default function Options({
   const handleHexCopy = (color: string) => {
     copy(color);
     toast({
-      title: "color copied to the clipboard",
+      title: "Color copied to the clipboard!",
     });
   };
   return (

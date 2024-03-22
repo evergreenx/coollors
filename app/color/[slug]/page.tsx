@@ -1,5 +1,5 @@
 "use client";
-import React, { KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, MouseEvent, useState } from "react";
 import { colord, extend } from "colord";
 import namesPlugin from "colord/plugins/names";
 
@@ -12,6 +12,7 @@ import { Reorder } from "framer-motion";
 import randomColor from "randomcolor";
 import { useRouter } from "next/navigation";
 import { columVariant, columnChildVariant } from "@/variant";
+import { Button } from "@/components/ui/button";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -40,7 +41,18 @@ export default function Page({
 
   const navigate = useRouter();
 
-  const handleGenerateNewPalette = (e: KeyboardEvent<HTMLDivElement>) => {
+  const handleGenerateNewPalette = (
+    e: KeyboardEvent<HTMLDivElement> | MouseEvent<HTMLButtonElement>,
+    eventType: string
+  ) => {
+    if (
+      eventType === "keydown" &&
+      (e as KeyboardEvent<HTMLDivElement>).key !== " " &&
+      (e as KeyboardEvent<HTMLDivElement>).key !== "Spacebar"
+    ) {
+      return; // If it's a keydown event and key is not space, return without doing anything
+    }
+
     const randomColorx = randomColor({
       hue: "random",
       luminosity: "random",
@@ -49,12 +61,15 @@ export default function Page({
     const routeParam = randomColorx
       ?.map((color: string) => color.slice(1))
       .join("-");
-    if (e.key === " " || e.key === "Spacebar")
+
+    // Navigate only if it's a keydown event and spacebar was pressed, or if it's a click event
+    if (eventType === "keydown" || eventType === "click") {
       navigate.replace(`/color/${routeParam}`);
+    }
   };
 
   const [lockedHexes, setLockedHexes] = useState<string[]>([]);
-  const handleToggleHex = (hex:string) => {
+  const handleToggleHex = (hex: string) => {
     if (lockedHexes.includes(hex)) {
       // If the hex is already locked, unlock it
       setLockedHexes(lockedHexes.filter((h) => h !== hex));
@@ -69,14 +84,21 @@ export default function Page({
   return (
     <div
       tabIndex={0}
-      onKeyDown={handleGenerateNewPalette}
+      onKeyDown={(e) => handleGenerateNewPalette(e, "keydown")}
       className="h-screen overflow-hidden   outline-none"
     >
       <div className="flex justify-between items-center w-full p-3">
         <div className="">
-          <p className="opacity-[0.5]">
+          <p className="opacity-[0.5] hidden  lg:block">
             Press the spacebar to generate new color palettes
           </p>
+
+          <Button
+            onClick={(e) => handleGenerateNewPalette(e, "click")}
+            className="lg:hidden block"
+          >
+            Generate
+          </Button>
         </div>
         <ViewDialog colors={colors} />
       </div>
@@ -106,14 +128,22 @@ export default function Page({
                 {lockedHexes.includes(color:string) ? "lock" : "open"}
               </p> */}
 
-
-
               {isDesktop ? (
                 <motion.div variants={columnChildVariant} className="">
-                  <Options toogleHex={handleToggleHex} lockedHexes={lockedHexes} color={color} controls={controls} />
+                  <Options
+                    toogleHex={handleToggleHex}
+                    lockedHexes={lockedHexes}
+                    color={color}
+                    controls={controls}
+                  />
                 </motion.div>
               ) : (
-                <Options toogleHex={handleToggleHex} lockedHexes={lockedHexes} color={color} controls={controls} />
+                <Options
+                  toogleHex={handleToggleHex}
+                  lockedHexes={lockedHexes}
+                  color={color}
+                  controls={controls}
+                />
               )}
 
               <div
