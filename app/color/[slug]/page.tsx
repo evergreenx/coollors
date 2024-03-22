@@ -53,22 +53,40 @@ export default function Page({
       return; // If it's a keydown event and key is not space, return without doing anything
     }
 
-    const randomColorx = randomColor({
-      hue: "random",
-      luminosity: "random",
-      count: 5,
-    });
-    const routeParam = randomColorx
-      ?.map((color: string) => color.slice(1))
-      .join("-");
+    //get five differnt color
+    const randomColors = Array.from({ length: 5 }, () =>
+      randomColor({
+        hue: "random",
+        luminosity: "random",
+      })
+    );
+    console.log(randomColors, "random");
 
-    // Navigate only if it's a keydown event and spacebar was pressed, or if it's a click event
-    if (eventType === "keydown" || eventType === "click") {
-      navigate.replace(`/color/${routeParam}`);
+    const allColors = [...lockedHexes, ...randomColors];
+
+    console.log(allColors, "all colors");
+
+    console.log(lockedHexes, "lockedhexes");
+    console.log(unlockedColors, "unlcok");
+
+    if (allColors.length >= 5) {
+      const routeParam = allColors
+        .slice(0, 5)
+        .map((color) => color.replace("#", ""))
+        .join("-");
+      if (eventType === "keydown" || eventType === "click") {
+        navigate.replace(`/color/${routeParam}`);
+      }
     }
+
+    // // Navigate only if it's a keydown event and spacebar was pressed, or if it's a click event
   };
 
+
+
   const [lockedHexes, setLockedHexes] = useState<string[]>([]);
+
+
   const handleToggleHex = (hex: string) => {
     if (lockedHexes.includes(hex)) {
       // If the hex is already locked, unlock it
@@ -80,6 +98,12 @@ export default function Page({
   };
 
   console.log(lockedHexes);
+
+  const unlockedColors = items.filter(
+    (color:string) => !lockedHexes.includes(color.slice(1))
+  );
+
+  console.log(unlockedColors, "tes");
 
   return (
     <div
@@ -124,10 +148,6 @@ export default function Page({
                 backgroundColor: `#${color}`,
               }}
             >
-              {/* <p onClick={() => handleToggleHex(color)}>
-                {lockedHexes.includes(color:string) ? "lock" : "open"}
-              </p> */}
-
               {isDesktop ? (
                 <motion.div variants={columnChildVariant} className="">
                   <Options
