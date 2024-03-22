@@ -53,8 +53,8 @@ export default function Page({
       navigate.replace(`/color/${routeParam}`);
   };
 
-  const [lockedHexes, setLockedHexes] = useState([]);
-  const handleToggleHex = (hex) => {
+  const [lockedHexes, setLockedHexes] = useState<string[]>([]);
+  const handleToggleHex = (hex:string) => {
     if (lockedHexes.includes(hex)) {
       // If the hex is already locked, unlock it
       setLockedHexes(lockedHexes.filter((h) => h !== hex));
@@ -113,7 +113,7 @@ export default function Page({
                   <Options toogleHex={handleToggleHex} lockedHexes={lockedHexes} color={color} controls={controls} />
                 </motion.div>
               ) : (
-                <Options color={color} controls={controls} />
+                <Options toogleHex={handleToggleHex} lockedHexes={lockedHexes} color={color} controls={controls} />
               )}
 
               <div

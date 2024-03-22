@@ -1,9 +1,11 @@
-import { useState } from "react";
 
- const useCopy = () => {
-  const [copiedText, setCopiedText] = useState<string | null>(null);
+import * as React  from "react"
 
-  const copy = async (text:string) => {
+
+const useCopy = () => {
+  const [copiedText, setCopiedText] = React.useState<string | null>(null);
+
+  const copy = async (text: string) => {
     if (!navigator?.clipboard) {
       console.warn("Clipboard not supported");
       return false;
@@ -19,7 +21,7 @@ import { useState } from "react";
     }
   };
 
-  return [copiedText, copy];
+  return {copiedText, copy};
 };
 
-export default useCopy
+export default useCopy;

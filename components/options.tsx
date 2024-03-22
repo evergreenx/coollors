@@ -13,6 +13,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+import { useToast } from "@/components/ui/use-toast";
+
 export default function Options({
   color,
   controls,
@@ -29,9 +32,9 @@ export default function Options({
 
   const router = useRouter();
 
-  const textToCopy = 'Hello, world!';
+  const textToCopy = "Hello, world!";
 
-  const [copy ] = useCopy();
+  const { copy } = useCopy();
 
   const { slug } = useParams<{ slug: string }>();
 
@@ -45,8 +48,13 @@ export default function Options({
     router.replace(newRoute);
   };
 
+  const { toast } = useToast();
+
   const handleHexCopy = (color: string) => {
-    copy(textToCopy)
+    copy(color);
+    toast({
+      title: "color copied to the clipboard",
+    });
   };
   return (
     <div>
