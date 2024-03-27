@@ -1,10 +1,12 @@
 "use client";
-import React, { KeyboardEvent, MouseEvent, useState } from "react";
+import React, { KeyboardEvent, MouseEvent, useCallback, useState } from "react";
 import { colord, extend } from "colord";
 import namesPlugin from "colord/plugins/names";
 
 import { ViewDialog } from "@/components/view-dialog";
 import { SaveDialog } from "@/components/save-dialog";
+
+import { ExportDialog } from "@/components/export-dialog";
 
 import { handleColorTextClass } from "@/lib/utils";
 import { motion, useDragControls } from "framer-motion";
@@ -15,6 +17,8 @@ import randomColor from "randomcolor";
 import { useRouter } from "next/navigation";
 import { columVariant, columnChildVariant } from "@/variant";
 import { Button } from "@/components/ui/button";
+import { Margin, usePDF } from "react-to-pdf";
+import { toPng } from "html-to-image";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -104,6 +108,12 @@ export default function Page({
 
   console.log(unlockedColors, "tes");
 
+  const { toPDF, targetRef } = usePDF({
+    method: "save",
+    filename: "palettes.pdf",
+    page: { orientation: "landscape", format: "a5" },
+  });
+
   return (
     <div
       tabIndex={0}
@@ -123,15 +133,18 @@ export default function Page({
             Generate
           </Button>
         </div>
-        <div className="">
+        <div className="flex items-center">
           <ViewDialog colors={colors} />
 
           <SaveDialog />
+
+          <ExportDialog targetRef={targetRef} handleExportPdf={toPDF} />
         </div>
       </div>
 
       <div>
         <Reorder.Group
+          ref={targetRef}
           className="flex lg:flex-row flex-col"
           axis={"x"}
           values={items}

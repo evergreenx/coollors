@@ -12,21 +12,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import SavePalettes from "@/components/save-palettes-form";
 
-import { X } from "lucide-react";
+import { Share2Icon, ShareIcon, X } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
-import HeartIcon from "@/assets/heart.svg";
-import Image from "next/image";
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTrigger,
 } from "./ui/drawer";
+import ExportPalettes from "./export-palettes";
+import { Margin, usePDF } from "react-to-pdf";
 
-export function SaveDialog() {
-  const [open, setOpen] = React.useState(false);
+export function ExportDialog({
+  handleExportPdf,
+  targetRef
+}: {
+  handleExportPdf: () => void;
+  targetRef : React.MutableRefObject<any>
+}) {
+  const [open, setOpen] = React.useState<boolean>(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
@@ -34,23 +39,25 @@ export function SaveDialog() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className="" asChild>
           <Button className="border-none" variant="outline">
-            <Image src={HeartIcon} alt="" className="mr-2" />
-            Save
+            <Share2Icon className="mr-2 w-[18px]" />
+            Export
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]  p-5">
+        <DialogContent className="sm:max-w-[425px]  p-2">
           <DialogHeader className="px-2 py-2">
-            <DialogTitle className="text-center">Save Palette</DialogTitle>
+            <DialogTitle className="text-center">Export Palette</DialogTitle>
             <DialogClose
               asChild
               className="absolute top-5 left-5 cursor-pointer "
             >
               <X width={20} />
             </DialogClose>
+
+            {/* <Button onClick={toPDF}>Download PDF</Button> */}
           </DialogHeader>
           {/* two differnt comp */}
 
-          <SavePalettes />
+          <ExportPalettes targetRef={targetRef} handleExportPdf={handleExportPdf} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -60,16 +67,16 @@ export function SaveDialog() {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button className="border-none" variant="outline">
-          <Image src={HeartIcon} alt="" className="mr-2" />
-          Save
+          <Share2Icon className="mr-2 w-[18px]" />
+          Export
         </Button>
       </DrawerTrigger>
       <DrawerContent className="sm:max-w-[425px] p-2">
         <DrawerHeader className="">
-          <DialogTitle className="text-left">Save Palette</DialogTitle>
+          <DialogTitle className="text-left">Export Palette</DialogTitle>
         </DrawerHeader>
 
-        <SavePalettes />
+        <ExportPalettes targetRef={targetRef} handleExportPdf={handleExportPdf} setOpen={setOpen} />
       </DrawerContent>
     </Drawer>
   );
