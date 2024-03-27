@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { client } from "@/config/client";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -27,7 +28,13 @@ const formSchema = z.object({
   }),
 });
 
-export default function SavePalettesForm() {
+export default function SavePalettesForm({
+  colors,
+  setOpen,
+}: {
+  colors: string[];
+  setOpen: (value: boolean) => void;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,10 +43,24 @@ export default function SavePalettesForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+
+    const newColors = colors.join("-");
+    console.log(newColors);
+
+    try {
+      await client.from("palettes").insert({
+        title: values.title,
+        desc: values.description,
+        colors: newColors,
+      });
+    } catch (error) {
+    } finally {
+      setOpen(false);
+    }
   }
   return (
     <Form {...form}>

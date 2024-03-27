@@ -25,7 +25,7 @@ import {
   DrawerTrigger,
 } from "./ui/drawer";
 
-export function SaveDialog() {
+export function SaveDialog({ colors }: { colors: string[] }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -50,7 +50,7 @@ export function SaveDialog() {
           </DialogHeader>
           {/* two differnt comp */}
 
-          <SavePalettes />
+          <SavePalettes setOpen={setOpen} colors={colors} />
         </DialogContent>
       </Dialog>
     );
@@ -69,7 +69,7 @@ export function SaveDialog() {
           <DialogTitle className="text-left">Save Palette</DialogTitle>
         </DrawerHeader>
 
-        <SavePalettes />
+        <SavePalettes setOpen={setOpen} colors={colors} />
       </DrawerContent>
     </Drawer>
   );

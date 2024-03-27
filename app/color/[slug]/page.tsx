@@ -1,5 +1,11 @@
 "use client";
-import React, { KeyboardEvent, MouseEvent, useCallback, useState } from "react";
+import React, {
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { colord, extend } from "colord";
 import namesPlugin from "colord/plugins/names";
 
@@ -19,6 +25,7 @@ import { columVariant, columnChildVariant } from "@/variant";
 import { Button } from "@/components/ui/button";
 import { Margin, usePDF } from "react-to-pdf";
 import { toPng } from "html-to-image";
+import { client } from "@/config/client";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -34,7 +41,9 @@ export default function Page({
   const colors: undefined | string[] | any =
     generatedColors && generatedColors.split("-");
 
-  const [items, setItems] = useState(colors);
+    console.log(colors)
+
+  const [colorPalettes, setColorPalattes] = useState(colors);
   const handleColorName = (colorHex: string) => {
     let addHex: string = `#${colorHex}`;
 
@@ -102,7 +111,7 @@ export default function Page({
 
   console.log(lockedHexes);
 
-  const unlockedColors = items.filter(
+  const unlockedColors = colorPalettes.filter(
     (color: string) => !lockedHexes.includes(color.slice(1))
   );
 
@@ -113,6 +122,16 @@ export default function Page({
     filename: "palettes.pdf",
     page: { orientation: "landscape", format: "a5" },
   });
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data, error } = await client.from("palettes").select();
+
+      console.log(data);
+    };
+
+    fetch();
+  }, []);
 
   return (
     <div
@@ -136,7 +155,7 @@ export default function Page({
         <div className="flex items-center">
           <ViewDialog colors={colors} />
 
-          <SaveDialog />
+          <SaveDialog colors={colors} />
 
           <ExportDialog targetRef={targetRef} handleExportPdf={toPDF} />
         </div>
@@ -147,10 +166,10 @@ export default function Page({
           ref={targetRef}
           className="flex lg:flex-row flex-col"
           axis={"x"}
-          values={items}
-          onReorder={setItems}
+          values={colorPalettes}
+          onReorder={setColorPalattes}
         >
-          {items.map((color: string, index: number) => (
+          {colorPalettes.map((color: string, index: number) => (
             <Reorder.Item
               value={color}
               key={color}

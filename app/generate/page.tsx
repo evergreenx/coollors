@@ -15,6 +15,8 @@ export default function Page() {
     ?.map((color: string) => color.slice(1))
     .join("-");
 
+    console.log(routeParam)
+
   const navigate = useRouter();
   useEffect(() => {
     setTimeout(() => {
