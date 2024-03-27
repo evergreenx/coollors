@@ -3,8 +3,10 @@
 import { BLUR_BUTTON_VARIANT, FADE_DOWN_ANIMATION_VARIANTS } from "@/variant";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useSession } from "@clerk/nextjs";
 
 export default function Home() {
+  const { isSignedIn } = useSession();
   return (
     <main className="flex min-h-screen lg:flex-row  flex-col-reverse  items-center justify-around   p-24">
       <motion.div
@@ -37,18 +39,31 @@ export default function Home() {
         </motion.p>
 
         <div className="w-[260px] mx-auto">
-          <motion.button
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 1, delay: 0.5 }}
-            variants={BLUR_BUTTON_VARIANT}
-            className="bg-[#0066ff] w-full text-white
-        font-semibold
-        
-        h-[46px] px-[21px] my-3  rounded-lg"
-          >
-            <Link href={"/generate"}>Start the generator!</Link>
-          </motion.button>
+          {isSignedIn ? (
+            <motion.button
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 1, delay: 0.5 }}
+              variants={BLUR_BUTTON_VARIANT}
+              className="bg-[#0066ff] w-full text-white
+          font-semibold
+          
+          h-[46px] px-[21px] my-3  rounded-lg"
+            >
+              <Link href={"/generate"}>Start the generator!</Link>
+            </motion.button>
+          ) : (
+            <motion.button
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 1, delay: 0.5 }}
+              variants={BLUR_BUTTON_VARIANT}
+              className="bg-[#0066ff] w-full text-white
+          font-semibold h-[46px] px-[21px] my-3  rounded-lg"
+            >
+              <Link href={"/sign-in"}>Signin to use generator!</Link>
+            </motion.button>
+          )}
 
           <motion.button
             initial="hidden"

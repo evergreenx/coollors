@@ -4,6 +4,8 @@ import { colord, extend } from "colord";
 import namesPlugin from "colord/plugins/names";
 
 import { ViewDialog } from "@/components/view-dialog";
+import { SaveDialog } from "@/components/save-dialog";
+
 import { handleColorTextClass } from "@/lib/utils";
 import { motion, useDragControls } from "framer-motion";
 import Options from "@/components/options";
@@ -82,10 +84,7 @@ export default function Page({
     // // Navigate only if it's a keydown event and spacebar was pressed, or if it's a click event
   };
 
-
-
   const [lockedHexes, setLockedHexes] = useState<string[]>([]);
-
 
   const handleToggleHex = (hex: string) => {
     if (lockedHexes.includes(hex)) {
@@ -100,7 +99,7 @@ export default function Page({
   console.log(lockedHexes);
 
   const unlockedColors = items.filter(
-    (color:string) => !lockedHexes.includes(color.slice(1))
+    (color: string) => !lockedHexes.includes(color.slice(1))
   );
 
   console.log(unlockedColors, "tes");
@@ -124,7 +123,11 @@ export default function Page({
             Generate
           </Button>
         </div>
-        <ViewDialog colors={colors} />
+        <div className="">
+          <ViewDialog colors={colors} />
+
+          <SaveDialog />
+        </div>
       </div>
 
       <div>
