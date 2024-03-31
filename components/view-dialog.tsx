@@ -7,16 +7,13 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
-
   DrawerContent,
- 
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -59,17 +56,15 @@ export function ViewDialog({ colors }: { colors: string[] }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-   
-
-        <Button variant="outline">
-          
-        <Image src={EyeIcon} alt="" className="mr-2" />View</Button>
+        <Button className="border-none" variant="outline">
+          <Image src={EyeIcon} alt="" className="mr-2" />
+          View
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
           <DrawerTitle>Quick view</DrawerTitle>
         </DrawerHeader>
-
 
         <QuickView colors={colors} />
       </DrawerContent>

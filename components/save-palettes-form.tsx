@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -35,6 +35,8 @@ export default function SavePalettesForm({
   colors: string[];
   setOpen: (value: boolean) => void;
 }) {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +51,8 @@ export default function SavePalettesForm({
     console.log(values);
 
     const newColors = colors.join("-");
-    console.log(newColors);
+
+    setLoading(true);
 
     try {
       await client.from("palettes").insert({
@@ -60,11 +63,18 @@ export default function SavePalettesForm({
     } catch (error) {
     } finally {
       setOpen(false);
+
+      setLoading(false);
     }
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={(e)=>{
+
+e.preventDefault()
+
+form.handleSubmit(onSubmit)
+      }} className="space-y-8   ">
         <FormField
           control={form.control}
           name="title"
@@ -99,8 +109,8 @@ export default function SavePalettesForm({
           )}
         />
 
-        <Button className="w-full" type="submit">
-          Save
+        <Button disabled={loading} className="w-full" type="submit">
+          {loading ? "saving" : "Save"}
         </Button>
       </form>
     </Form>

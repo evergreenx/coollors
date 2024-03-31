@@ -5,15 +5,13 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 
 export default function Header() {
-
   return (
-    <div className="p-4 border-b-2  w-full bg-white z-10">
+    <div className="p-4 border-b-2  lg:absolute w-full bg-white z-10">
       <div className="flex justify-between items-center">
         <Link href={"/"}>
           <Image src={Logo} alt="logo" />
         </Link>
         <UserButton />
-
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSession } from "@clerk/nextjs";
 
 export default function Home() {
-  const { isSignedIn } = useSession();
+  const { isSignedIn , isLoaded } = useSession();
   return (
     <main className="flex min-h-screen lg:flex-row  flex-col-reverse  items-center justify-around   p-24">
       <motion.div
@@ -39,7 +39,7 @@ export default function Home() {
         </motion.p>
 
         <div className="w-[260px] mx-auto">
-          {isSignedIn ? (
+          {isSignedIn && isLoaded ? (
             <motion.button
               initial="hidden"
               animate="visible"

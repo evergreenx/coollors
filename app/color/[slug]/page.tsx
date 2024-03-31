@@ -23,7 +23,7 @@ import randomColor from "randomcolor";
 import { useRouter } from "next/navigation";
 import { columVariant, columnChildVariant } from "@/variant";
 import { Button } from "@/components/ui/button";
-import { Margin, usePDF } from "react-to-pdf";
+import { usePDF } from "react-to-pdf";
 import { toPng } from "html-to-image";
 import { client } from "@/config/client";
 extend([namesPlugin]);
@@ -40,8 +40,6 @@ export default function Page({
 
   const colors: undefined | string[] | any =
     generatedColors && generatedColors.split("-");
-
-    console.log(colors)
 
   const [colorPalettes, setColorPalattes] = useState(colors);
   const handleColorName = (colorHex: string) => {
@@ -68,6 +66,11 @@ export default function Page({
       return; // If it's a keydown event and key is not space, return without doing anything
     }
 
+
+    const dialog = document.getElementsByClassName('dialog');
+
+    console.log(dialog)
+
     //get five differnt color
     const randomColors = Array.from({ length: 5 }, () =>
       randomColor({
@@ -75,7 +78,7 @@ export default function Page({
         luminosity: "random",
       })
     );
-    console.log(randomColors, "random");
+
 
     const allColors = [...lockedHexes, ...randomColors];
 
@@ -93,8 +96,6 @@ export default function Page({
         navigate.replace(`/color/${routeParam}`);
       }
     }
-
-    // // Navigate only if it's a keydown event and spacebar was pressed, or if it's a click event
   };
 
   const [lockedHexes, setLockedHexes] = useState<string[]>([]);
@@ -114,8 +115,6 @@ export default function Page({
   const unlockedColors = colorPalettes.filter(
     (color: string) => !lockedHexes.includes(color.slice(1))
   );
-
-  console.log(unlockedColors, "tes");
 
   const { toPDF, targetRef } = usePDF({
     method: "save",
@@ -137,9 +136,9 @@ export default function Page({
     <div
       tabIndex={0}
       onKeyDown={(e) => handleGenerateNewPalette(e, "keydown")}
-      className="h-screen overflow-hidden   outline-none"
+      className=" min-h-full relativecc  outline-none "
     >
-      <div className="flex justify-between items-center w-full p-3">
+      <div className="flex lg:absolute top-[4.1rem]  z-50  bg-white justify-between items-center w-full p-2">
         <div className="">
           <p className="opacity-[0.5] hidden  lg:block">
             Press the spacebar to generate new color palettes
@@ -164,7 +163,7 @@ export default function Page({
       <div>
         <Reorder.Group
           ref={targetRef}
-          className="flex lg:flex-row flex-col"
+          className="flex lg:flex-row flex-col "
           axis={"x"}
           values={colorPalettes}
           onReorder={setColorPalattes}
@@ -178,7 +177,7 @@ export default function Page({
               dragControls={controls}
               variants={columVariant}
               whileHover={"show"}
-              className="w-full lg:h-screen h-40 flex flex-row-reverse justify-center items-center px-[5px] relative"
+              className="w-full lg:h-screen  h-40 flex flex-row-reverse justify-center items-center px-[5px] relative"
               style={{
                 backgroundColor: `#${color}`,
               }}
@@ -217,7 +216,6 @@ export default function Page({
                   {color}
 
                   <br />
-                  {/* {colord(`#${color}`).luminance()} */}
                 </h3>
 
                 <p
