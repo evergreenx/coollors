@@ -131,6 +131,18 @@ export default function Page({
     fetch();
   }, []);
 
+  console.log(showSavedPalettes);
+
+  useEffect(() => {
+    animate(
+      ".menuicon",
+
+      {
+        rotate: showSavedPalettes ? 90 : 0,
+      }
+    );
+  }, [showSavedPalettes]);
+
   return (
     <div
       tabIndex={0}
@@ -163,14 +175,6 @@ export default function Page({
               className="menuicon"
               onClick={() => {
                 setShowSavedPalettes(!showSavedPalettes);
-
-                animate(
-                  ".menuicon",
-
-                  {
-                    rotate: showSavedPalettes ? 0 : 90,
-                  }
-                );
               }}
             />
           </Button>
@@ -246,7 +250,9 @@ export default function Page({
             </Reorder.Item>
           ))}
 
-          {showSavedPalettes ? <SavedPalettes /> : null}
+          {showSavedPalettes ? (
+            <SavedPalettes setShowSavedPalettes={setShowSavedPalettes} />
+          ) : null}
         </Reorder.Group>
       </div>
     </div>
