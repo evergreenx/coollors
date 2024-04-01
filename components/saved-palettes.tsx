@@ -33,7 +33,7 @@ export default function SavedPalettes() {
     return (
 
         <>
-      <div className="absolute left-0 z-0 top-14 h-screen w-full bg-black opacity-40"></div>
+      <div className="absolute left-0 z-0 top-0  h-screen w-full bg-black opacity-40"></div>
 
 
 <div className="pt-32 px-3 lg:w-full w-[90%] top-0  h-screen right-0 fixed lg:sticky bg-white ">
