@@ -46,7 +46,7 @@ export default function Palette({
       onDragEnd={() => setDraggable(false)}
       variants={columVariant}
       whileHover={"show"}
-      className="w-full lg:h-screen h-[100px]   flex flex-row-reverse justify-center items-center px-[5px] relative"
+      className="w-full lg:h-screen h-full   flex flex-row-reverse justify-center items-center px-[5px] relative"
       style={{
         backgroundColor: `#${color}`,
       }}

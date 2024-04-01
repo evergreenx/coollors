@@ -138,7 +138,7 @@ export default function Page({
       <div>
         <Reorder.Group
           ref={targetRef}
-          className="flex lg:flex-row flex-col w-full "
+          className="flex lg:flex-row flex-col w-full  h-screen"
           axis={dynamicAxis}
           values={colorPalettes}
           onReorder={setColorPalattes}
