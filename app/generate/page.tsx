@@ -21,7 +21,7 @@ export default function Page() {
   useEffect(() => {
     setTimeout(() => {
       navigate.replace(`/color/${routeParam}`);
-    }, 4000);
+    }, 3000);
   }, [navigate]);
   return (
     <div className="h-screen bg-white w-screen flex justify-center items-center">

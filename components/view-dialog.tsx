@@ -58,7 +58,7 @@ export function ViewDialog({ colors }: { colors: string[] }) {
       <DrawerTrigger asChild>
         <Button className="border-none" variant="outline">
           <Image src={EyeIcon} alt="" className="mr-2" />
-          View
+          
         </Button>
       </DrawerTrigger>
       <DrawerContent>

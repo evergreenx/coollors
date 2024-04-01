@@ -66,7 +66,6 @@ export function SaveDialog({ colors }: { colors: string[] }) {
       <DrawerTrigger asChild>
         <Button className="border-none" variant="outline">
           <Image src={HeartIcon} alt="" className="mr-2" />
-          Save
         </Button>
       </DrawerTrigger>
       <DrawerContent className="sm:max-w-[425px] p-2">

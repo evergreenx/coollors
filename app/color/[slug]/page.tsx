@@ -15,7 +15,7 @@ import { SaveDialog } from "@/components/save-dialog";
 import { ExportDialog } from "@/components/export-dialog";
 
 import { handleColorTextClass } from "@/lib/utils";
-import { motion, useDragControls } from "framer-motion";
+import { motion, useAnimate, useDragControls } from "framer-motion";
 import Options from "@/components/options";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Reorder } from "framer-motion";
@@ -24,8 +24,9 @@ import { useRouter } from "next/navigation";
 import { columVariant, columnChildVariant } from "@/variant";
 import { Button } from "@/components/ui/button";
 import { usePDF } from "react-to-pdf";
-import { toPng } from "html-to-image";
 import { client } from "@/config/client";
+import SavedPalettes from "@/components/saved-palettes";
+import { MenuIcon, MenuSquare } from "lucide-react";
 extend([namesPlugin]);
 export default function Page({
   params,
@@ -35,6 +36,8 @@ export default function Page({
   };
 }) {
   const generatedColors = params.slug;
+
+  const [scope, animate] = useAnimate();
 
   // TODO - fix type and namin of state
 
@@ -94,6 +97,8 @@ export default function Page({
 
   const [lockedHexes, setLockedHexes] = useState<string[]>([]);
 
+  const [showSavedPalettes, setShowSavedPalettes] = useState(false);
+
   const handleToggleHex = (hex: string) => {
     if (lockedHexes.includes(hex)) {
       // If the hex is already locked, unlock it
@@ -129,10 +134,11 @@ export default function Page({
   return (
     <div
       tabIndex={0}
+      ref={scope}
       onKeyDown={(e) => handleGenerateNewPalette(e, "keydown")}
       className=" min-h-full relative  outline-none "
     >
-      <div className="flex lg:absolute top-[4.1rem]  z-50  bg-white justify-between items-center w-full p-2">
+      <div className="flex lg:absolute top-[4.1rem]  z-50  bg-white justify-between items-center w-full p-2  border-b-2 ">
         <div className="">
           <p className="opacity-[0.5] hidden  lg:block">
             Press the spacebar to generate new color palettes
@@ -151,6 +157,23 @@ export default function Page({
           <SaveDialog colors={colors} />
 
           <ExportDialog targetRef={targetRef} handleExportPdf={toPDF} />
+
+          <Button className="border-none " variant={"outline"}>
+            <MenuIcon
+              className="menuicon"
+              onClick={() => {
+                setShowSavedPalettes(!showSavedPalettes);
+
+                animate(
+                  ".menuicon",
+
+                  {
+                    rotate: showSavedPalettes ? 0 : 90,
+                  }
+                );
+              }}
+            />
+          </Button>
         </div>
       </div>
 
@@ -222,6 +245,8 @@ export default function Page({
               </div>
             </Reorder.Item>
           ))}
+
+          {showSavedPalettes ? <SavedPalettes /> : null}
         </Reorder.Group>
       </div>
     </div>

@@ -68,7 +68,7 @@ export function ExportDialog({
       <DrawerTrigger asChild>
         <Button className="border-none" variant="outline">
           <Share2Icon className="mr-2 w-[18px]" />
-          Export
+          
         </Button>
       </DrawerTrigger>
       <DrawerContent className="sm:max-w-[425px] p-2">
