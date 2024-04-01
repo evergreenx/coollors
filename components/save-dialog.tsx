@@ -68,7 +68,11 @@ export function SaveDialog({ colors }: { colors: string[] }) {
           <Image src={HeartIcon} alt="" className="mr-2" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="sm:max-w-[425px] p-2">
+      <DrawerContent 
+       onKeyDown={(event: any) => {
+        event.stopPropagation();
+      }}
+      className="sm:max-w-[425px] p-2">
         <DrawerHeader className="">
           <DialogTitle className="text-left">Save Palette</DialogTitle>
         </DrawerHeader>
