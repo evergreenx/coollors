@@ -25,45 +25,39 @@ import {
   DrawerTrigger,
 } from "./ui/drawer";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-
 export function SaveDialog({ colors }: { colors: string[] }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
-      <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogTrigger className="" asChild>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger className="" asChild>
           <Button className="border-none" variant="outline">
             <Image src={HeartIcon} alt="" className="mr-2" />
             Save
           </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent className="sm:max-w-[425px] pointer-events-none  p-5 absolute dialog">
-          <AlertDialogHeader className="px-2 py-2">
-            <AlertDialogTitle className="text-center">
-              Save Palette
-            </AlertDialogTitle>
-            <div className="absolute top-5 left-5 cursor-pointer ">
+        </DialogTrigger>
+        <DialogContent
+          onKeyDown={(event: any) => {
+            event.stopPropagation();
+          }}
+          className="sm:max-w-[425px] pointer-events-none  p-5"
+        >
+          <DialogHeader className="px-2 py-2">
+            <DialogTitle className="text-center">Save Palette</DialogTitle>
+            <DialogClose
+              asChild
+              className="absolute top-5 left-5 cursor-pointer "
+            >
               <X width={20} />
-            </div>
-          </AlertDialogHeader>
+            </DialogClose>
+          </DialogHeader>
           {/* two differnt comp */}
 
           <SavePalettes setOpen={setOpen} colors={colors} />
-        </AlertDialogContent>
-      </AlertDialog>
+        </DialogContent>
+      </Dialog>
     );
   }
 

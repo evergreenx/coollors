@@ -66,11 +66,6 @@ export default function Page({
       return; // If it's a keydown event and key is not space, return without doing anything
     }
 
-
-    const dialog = document.getElementsByClassName('dialog');
-
-    console.log(dialog)
-
     //get five differnt color
     const randomColors = Array.from({ length: 5 }, () =>
       randomColor({
@@ -78,7 +73,6 @@ export default function Page({
         luminosity: "random",
       })
     );
-
 
     const allColors = [...lockedHexes, ...randomColors];
 
@@ -136,7 +130,7 @@ export default function Page({
     <div
       tabIndex={0}
       onKeyDown={(e) => handleGenerateNewPalette(e, "keydown")}
-      className=" min-h-full relativecc  outline-none "
+      className=" min-h-full relative  outline-none "
     >
       <div className="flex lg:absolute top-[4.1rem]  z-50  bg-white justify-between items-center w-full p-2">
         <div className="">

@@ -69,12 +69,7 @@ export default function SavePalettesForm({
   }
   return (
     <Form {...form}>
-      <form onSubmit={(e)=>{
-
-e.preventDefault()
-
-form.handleSubmit(onSubmit)
-      }} className="space-y-8   ">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8   ">
         <FormField
           control={form.control}
           name="title"
@@ -110,7 +105,7 @@ form.handleSubmit(onSubmit)
         />
 
         <Button disabled={loading} className="w-full" type="submit">
-          {loading ? "saving" : "Save"}
+          {loading ? "Saving" : "Save"}
         </Button>
       </form>
     </Form>
