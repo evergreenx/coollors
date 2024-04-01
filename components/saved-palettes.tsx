@@ -27,7 +27,7 @@ export default function SavedPalettes() {
   }, []);
 
   return (
-    <div className="pt-32 px-3 w-full h-screen bg-white ">
+    <div className="pt-32 px-3 lg:w-full w-[90%] top-0  h-screen right-0 fixed lg:sticky bg-white ">
       <div className="relative bottom-0 left-0  rounded-lg     px-3 pb-4 pt-1   w-full">
         {isLoading ? (
           <div className="flex justify-center items-center">
