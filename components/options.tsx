@@ -56,7 +56,7 @@ export default function Options({
   };
   return (
     <div>
-      <div className="flex flex-col space-y-4 ">
+      <div className="flex flex-row lg:flex-col lg:space-y-4 space-y-0 space-x-4 lg:space-x-0 ">
         {slug.split("-").length > 2 && (
           <div onClick={() => handleRemoveColor(color)} className="m">
             <TooltipProvider>

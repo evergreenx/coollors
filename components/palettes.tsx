@@ -46,7 +46,7 @@ export default function Palette({
       onDragEnd={() => setDraggable(false)}
       variants={columVariant}
       whileHover={"show"}
-      className="w-full lg:h-screen   flex flex-row-reverse justify-center items-center px-[5px] relative"
+      className="w-full lg:h-screen h-[100px]   flex flex-row-reverse justify-center items-center px-[5px] relative"
       style={{
         backgroundColor: `#${color}`,
       }}
@@ -75,7 +75,7 @@ ${handleColorTextClass(color) === "white" ? "text-white" : "text-black"}
 lg:items-center flex-col w-full mb-1`}
       >
         <h3
-          className={` text-[30px] uppercase font-semibold 
+          className={` text-xl  lg:text-[30px] uppercase font-semibold 
 `}
         >
           {color}
