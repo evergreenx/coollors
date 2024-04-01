@@ -47,9 +47,7 @@ export default function SavedPalettes({
 
         {
           delay: stagger(0.09),
-          duration : 0.5,
-
-      
+          duration: 0.5,
         }
       );
     }

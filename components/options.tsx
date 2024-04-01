@@ -18,21 +18,19 @@ import { useToast } from "@/components/ui/use-toast";
 
 export default function Options({
   color,
-  controls,
   toogleHex,
   lockedHexes,
+  setDraggable,
 }: {
   color: string;
-  controls: DragControls;
   toogleHex: (color: string) => void;
   lockedHexes: string[];
+  setDraggable: (value: boolean) => void;
 }) {
   const currentColor =
     handleColorTextClass(color) === "white" ? "white" : "black";
 
   const router = useRouter();
-
-  const textToCopy = "Hello, world!";
 
   const { copy } = useCopy();
 
@@ -89,9 +87,7 @@ export default function Options({
 
         <div
           onPointerDown={(e) => {
-            controls.start(e);
-
-            e.preventDefault();
+            // e.preventDefault();
           }}
           className=""
         >
@@ -99,7 +95,14 @@ export default function Options({
             <Tooltip>
               <TooltipTrigger>
                 {" "}
-                <DragIcon currentColor={currentColor} />
+                <div
+                  onMouseEnter={() => setDraggable(true)}
+                  onMouseLeave={() => setDraggable(false)} // retain this for better animation
+                  onTouchStart={() => setDraggable(true)}
+                  className=""
+                >
+                  <DragIcon currentColor={currentColor} />
+                </div>
               </TooltipTrigger>
 
               <TooltipContent>Drag</TooltipContent>
