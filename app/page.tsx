@@ -8,7 +8,7 @@ import { useSession } from "@clerk/nextjs";
 export default function Home() {
   const { isSignedIn , isLoaded } = useSession();
   return (
-    <main className="flex min-h-screen lg:flex-row  flex-col-reverse  items-center justify-around   p-24">
+    <main className="flex  lg:flex-row  flex-col-reverse  items-center justify-around   p-24">
       <motion.div
         className="w-[calc(100% - 1100px + 180px)]"
         initial="hidden"

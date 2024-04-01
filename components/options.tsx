@@ -86,23 +86,16 @@ export default function Options({
         </div>
 
         <div
-          onPointerDown={(e) => {
-            // e.preventDefault();
-          }}
+          onMouseEnter={() => setDraggable(true)}
+          onMouseLeave={() => setDraggable(false)} // retain this for better animation
+          onTouchStart={() => setDraggable(true)}
           className=""
         >
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 {" "}
-                <div
-                  onMouseEnter={() => setDraggable(true)}
-                  onMouseLeave={() => setDraggable(false)} // retain this for better animation
-                  onTouchStart={() => setDraggable(true)}
-                  className=""
-                >
-                  <DragIcon currentColor={currentColor} />
-                </div>
+                <DragIcon currentColor={currentColor} />
               </TooltipTrigger>
 
               <TooltipContent>Drag</TooltipContent>
