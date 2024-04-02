@@ -151,6 +151,8 @@ export default function Page({
               setLockedHexes={setLockedHexes}
               lockedHexes={lockedHexes}
               key={color}
+              colorIndex={index}
+              colors={colors}
             />
           ))}
 

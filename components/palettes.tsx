@@ -8,14 +8,19 @@ import { handleColorTextClass } from "@/lib/utils";
 import { colord } from "colord";
 import ReactGPicker from "react-gcolor-picker";
 import { useClickOutside } from "@/hooks/use-click-outside";
+import { useRouter } from "next/navigation";
 
 export default function Palette({
   color,
+  colors,
   lockedHexes,
+  colorIndex,
   setLockedHexes,
 }: {
   color: string;
+  colors: string[];
   lockedHexes: string[];
+  colorIndex: number;
   setLockedHexes: (value: string[]) => void;
 }) {
   const [draggable, setDraggable] = useState(false);
@@ -39,18 +44,35 @@ export default function Palette({
   };
 
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [newColorPalettes, setNewColorPalettes] = useState<string[]>([]);
 
-  const handlesetColor = (color: string) => {
+  const handlesetColor = (color: string, index: number) => {
+    console.log(color);
 
-    console.log(color)
-    const slicedColor = color.slice(0);
-    setColorInstance(slicedColor);
-    console.log(slicedColor);
+    const newColor = color.replace(/^#/, "");
+    if (newColor) {
+      const newColors = [...colors];
 
-    // valueToHex(color)
+      newColors[index] = newColor;
+
+      console.log(newColors);
+
+      setNewColorPalettes(newColors);
+    }
+
+    setColorInstance(color);
   };
 
+  const navigate = useRouter();
+
   const onClickOutside = () => {
+    console.log(newColorPalettes);
+
+    const newRoute = newColorPalettes.join("-");
+
+    console.log(newRoute);
+    navigate.replace(`/color/${newRoute}`);
+
     setShowColorPicker(false);
   };
 
@@ -92,9 +114,7 @@ export default function Palette({
         <div className=" p-2 absolute rounded-3xl z-50   " ref={clickRef}>
           <ReactGPicker
             value={colorInstance}
-            onChange={handlesetColor}
-         
-            
+            onChange={(value) => handlesetColor(value, colorIndex)}
             showAlpha={false}
             gradient={false}
             format="hex"
