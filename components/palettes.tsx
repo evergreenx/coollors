@@ -41,6 +41,8 @@ export default function Palette({
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   const handlesetColor = (color: string) => {
+
+    console.log(color)
     const slicedColor = color.slice(0);
     setColorInstance(slicedColor);
     console.log(slicedColor);
@@ -87,10 +89,12 @@ export default function Palette({
       )}
 
       {showColorPicker ? (
-        <div className="bg-white p-2 absolute rounded-3xl   " ref={clickRef}>
+        <div className=" p-2 absolute rounded-3xl z-50   " ref={clickRef}>
           <ReactGPicker
             value={colorInstance}
             onChange={handlesetColor}
+         
+            
             showAlpha={false}
             gradient={false}
             format="hex"

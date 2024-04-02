@@ -9,6 +9,8 @@ extend([namesPlugin]);
 export default function QuickView({ colors }: { colors: string[] }) {
   const [selectedColor, setSelectedColor] = useState<string>(colors[0]);
 
+  console.log(colors)
+  console.log(selectedColor)
   return (
     <>
       <div
@@ -17,7 +19,7 @@ export default function QuickView({ colors }: { colors: string[] }) {
           backgroundColor: `#${selectedColor}`,
         }}
         className={` no-scrollbar overflow-auto max-h-52 font-medium m-0 p-3 w-full ${
-          handleColorTextClass(selectedColor) === "white"
+          handleColorTextClass(`#${selectedColor}`) === "white"
             ? "text-white"
             : "text-black"
         }
@@ -67,7 +69,7 @@ export default function QuickView({ colors }: { colors: string[] }) {
                 <div
                   className={`
                 ${
-                  handleColorTextClass(color) === "white"
+                  handleColorTextClass(`#${color}`) === "white"
                     ? "bg-white"
                     : "bg-black"
                 }
