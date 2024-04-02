@@ -3,7 +3,6 @@ import { CopyIcon, CancelIcon, DragIcon, LockIcon, OpenIcon } from "./icons";
 import { handleColorTextClass } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
-import { DragControls, Reorder, useDragControls } from "framer-motion";
 
 import useCopy from "@/hooks/use-copy";
 
@@ -37,9 +36,11 @@ export default function Options({
   const { slug } = useParams<{ slug: string }>();
 
   const handleRemoveColor = (colorToRemove: string) => {
-    console.log(colorToRemove);
+
     const colors = slug.split("-");
-    const updatedColors = colors.filter((c) => c !== colorToRemove);
+    const updatedColors = colors.filter((c) => c !== colorToRemove.replace(/^#/, ''));
+
+    console.log(updatedColors)
 
     const newRoute = updatedColors.join("-");
 
@@ -55,8 +56,9 @@ export default function Options({
     });
   };
   return (
-    <div>
-      <div className="flex flex-row lg:flex-col lg:space-y-4 space-y-0 space-x-4 lg:space-x-0 ">
+ 
+      <div className="flex flex-row lg:flex-col lg:space-y-4 space-y-0 space-x-4 lg:space-x-0  
+       items-center   ">
         {slug.split("-").length > 2 && (
           <div onClick={() => handleRemoveColor(color)} className="m">
             <TooltipProvider>
@@ -119,6 +121,6 @@ export default function Options({
           </TooltipProvider>
         </div>
       </div>
-    </div>
+  
   );
 }

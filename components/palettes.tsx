@@ -2,10 +2,12 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { columVariant, columnChildVariant } from "@/variant";
 import { AnimatePresence, Reorder, motion } from "framer-motion";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Options from "./options";
 import { handleColorTextClass } from "@/lib/utils";
 import { colord } from "colord";
+import ReactGPicker from "react-gcolor-picker";
+import { useClickOutside } from "@/hooks/use-click-outside";
 
 export default function Palette({
   color,
@@ -18,14 +20,12 @@ export default function Palette({
 }) {
   const [draggable, setDraggable] = useState(false);
 
+  const [colorInstance, setColorInstance] = useState(`#${color}`);
+
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-
-
   const handleColorName = (colorHex: string) => {
-    let addHex: string = `#${colorHex}`;
-
-    return colord(addHex).toName({ closest: true });
+    return colord(colorHex).toName({ closest: true });
   };
 
   const handleToggleHex = (hex: string) => {
@@ -37,6 +37,23 @@ export default function Palette({
       setLockedHexes([...lockedHexes, hex]);
     }
   };
+
+  const [showColorPicker, setShowColorPicker] = useState(false);
+
+  const handlesetColor = (color: string) => {
+    const slicedColor = color.slice(0);
+    setColorInstance(slicedColor);
+    console.log(slicedColor);
+
+    // valueToHex(color)
+  };
+
+  const onClickOutside = () => {
+    setShowColorPicker(false);
+  };
+
+  const clickRef = useClickOutside(onClickOutside);
+
   return (
     <Reorder.Item
       value={color}
@@ -48,7 +65,7 @@ export default function Palette({
       whileHover={"show"}
       className="w-full lg:h-screen h-full   flex flex-row-reverse justify-center items-center px-[5px] relative"
       style={{
-        backgroundColor: `#${color}`,
+        backgroundColor: `${colorInstance}`,
       }}
     >
       {isDesktop ? (
@@ -56,7 +73,7 @@ export default function Palette({
           <Options
             toogleHex={handleToggleHex}
             lockedHexes={lockedHexes}
-            color={color}
+            color={colorInstance}
             setDraggable={setDraggable}
           />
         </motion.div>
@@ -64,21 +81,41 @@ export default function Palette({
         <Options
           toogleHex={handleToggleHex}
           lockedHexes={lockedHexes}
-          color={color}
+          color={colorInstance}
           setDraggable={setDraggable}
         />
       )}
 
+      {showColorPicker ? (
+        <div className="bg-white p-2 absolute rounded-3xl   " ref={clickRef}>
+          <ReactGPicker
+            value={colorInstance}
+            onChange={handlesetColor}
+            showAlpha={false}
+            gradient={false}
+            format="hex"
+          />
+        </div>
+      ) : (
+        ""
+      )}
+
       <div
         className={`lg:absolute static bottom-16 left-0  flex
-${handleColorTextClass(color) === "white" ? "text-white" : "text-black"}
+${
+  handleColorTextClass(colorInstance) === "white" ? "text-white" : "text-black "
+}
+
+
+
 lg:items-center flex-col w-full mb-1`}
       >
         <h3
-          className={` text-xl  lg:text-[30px] uppercase font-semibold 
+          className={` text-xl  lg:text-[30px] uppercase font-semibold cursor-pointer
 `}
+          onClick={() => setShowColorPicker(true)}
         >
-          {color}
+          {colorInstance.replace(/^#/, "")}
 
           <br />
         </h3>
@@ -88,7 +125,7 @@ lg:items-center flex-col w-full mb-1`}
             color
           )} text-[11px] opacity-[0.5] capitalize inset-0 mt-[9px] `}
         >
-          ~{handleColorName(color)}
+          ~{handleColorName(colorInstance)}
         </p>
       </div>
     </Reorder.Item>

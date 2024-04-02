@@ -38,6 +38,8 @@ export default function Page({
 
   const [colorPalettes, setColorPalattes] = useState(colors);
 
+  console.log(colorPalettes)
+
   const navigate = useRouter();
 
   const handleGenerateNewPalette = (
