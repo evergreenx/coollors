@@ -9,6 +9,12 @@ import { colord } from "colord";
 import ReactGPicker from "react-gcolor-picker";
 import { useClickOutside } from "@/hooks/use-click-outside";
 import { useRouter } from "next/navigation";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "./ui/tooltip";
 
 export default function Palette({
   color,
@@ -78,6 +84,9 @@ export default function Palette({
 
   const clickRef = useClickOutside(onClickOutside);
 
+  const colorName = handleColorName(colorInstance);
+  const colorTextLumi = handleColorTextClass(colorInstance);
+
   return (
     <Reorder.Item
       value={color}
@@ -126,30 +135,32 @@ export default function Palette({
 
       <div
         className={`lg:absolute static bottom-16 left-0  flex
-${
-  handleColorTextClass(colorInstance) === "white" ? "text-white" : "text-black "
-}
-
-
-
+${colorTextLumi === "white" ? "text-white" : "text-black "}
 lg:items-center flex-col w-full mb-1`}
       >
-        <h3
-          className={` text-xl  lg:text-[30px] uppercase font-semibold cursor-pointer
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              {" "}
+              <h3
+                className={` text-xl  lg:text-[30px] uppercase font-semibold cursor-pointer
 `}
-          onClick={() => setShowColorPicker(true)}
-        >
-          {colorInstance.replace(/^#/, "")}
+                onClick={() => setShowColorPicker(true)}
+              >
+                {colorInstance.replace(/^#/, "")}
 
-          <br />
-        </h3>
+                <br />
+              </h3>
+            </TooltipTrigger>
+
+            <TooltipContent>Select color</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <p
-          className={` ${handleColorTextClass(
-            color
-          )} text-[11px] opacity-[0.5] capitalize inset-0 mt-[9px] `}
+          className={`  text-[11px] opacity-[0.5] capitalize inset-0 mt-[9px] `}
         >
-          ~{handleColorName(colorInstance)}
+          ~{colorName}
         </p>
       </div>
     </Reorder.Item>

@@ -64,6 +64,14 @@ export default function SavedPalettes({
             onClick={() => setShowSavedPalettes(false)}
           />
           <div className="relative bottom-0 left-0  rounded-lg     px-3 pb-4 pt-1   w-full">
+
+
+{
+!isLoading && SavedPalettes && SavedPalettes?.length <= 0 ? <p className="text-center font-semibold my-20">No saved palettes</p> : null
+
+}
+
+
             {isLoading ? (
               <div className="flex justify-center items-center">
                 <div className="border-gray-300 h-10 w-10 animate-spin rounded-full border-2 border-t-black" />
@@ -112,6 +120,11 @@ export default function SavedPalettes({
               <div className="border-gray-300 h-10 w-10 animate-spin rounded-full border-2 border-t-black" />
             </div>
           ) : null}
+
+{
+!isLoading && SavedPalettes && SavedPalettes?.length <= 0 ? <p className="text-center font-semibold my-20">No saved palettes</p> : null
+}
+
 
           {!isLoading &&
             SavedPalettes?.map((palette) => {

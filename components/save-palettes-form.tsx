@@ -17,6 +17,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { client } from "@/config/client";
+import { useToast } from "./ui/use-toast";
+import { title } from "process";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -45,6 +47,9 @@ export default function SavePalettesForm({
     },
   });
 
+  const {toast} = useToast()
+
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
@@ -65,6 +70,12 @@ export default function SavePalettesForm({
       setOpen(false);
 
       setLoading(false);
+
+      toast(
+       {
+        title : 'color palette saved'
+       }
+      )
     }
   }
   return (
