@@ -1,4 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Coolors Clone
+
+A Coolors clone built using Next.js, Supabase, and Tailwind CSS. This project allows users to generate color palettes, save them to a database, and access them later.
+
+## Features
+
+- Color palette generation
+- Saving palettes to supabase db
+- Authentication with Clerk auth
+- CRUD operations for palettes
+- Exporting palettes as PNG, PDF, SVG and more
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org/) - React framework for building server-side rendered applications
+- [Supabase](https://supabase.io/) - Open Source Firebase alternative. Instant Realtime, Postgres-powered and scalable
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework for building custom designs
+- [Clerk Auth](https://tailwindcss.com/) - A utility-first CSS framework for building custom designs
 
 ## Getting Started
 
