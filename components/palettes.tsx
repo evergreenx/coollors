@@ -143,7 +143,7 @@ lg:items-center flex-col w-full mb-1`}
             <TooltipTrigger>
               {" "}
               <h3
-                className={` text-xl  lg:text-[30px] uppercase font-semibold cursor-pointer
+                className={` text-xl  lg:text-[30px] uppercase font-semibold cursor-pointer text-left
 `}
                 onClick={() => setShowColorPicker(true)}
               >
