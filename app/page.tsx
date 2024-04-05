@@ -11,26 +11,12 @@ export default function Home() {
 
   const [scope, animate] = useAnimate();
 
-  const colors = [
-    "#FF0000", // Red
-    "#00FF00", // Lime
-    "#0000FF", // Blue
-    "#FFFF00", // Yellow
-    "#FF00FF", // Fuchsia
-    "#00FFFF", // Aqua
-    "#FFA500", // Orange
-    "#800080", // Purple
-    "#008080", // Teal
-    "#808080", // Gray
-  ];
-
-
   const getRandomColor = () => {
     // Generate a random hexadecimal color
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
   };
-  
-  const animateWithRandomColors = async (target:string) => {
+
+  const animateWithRandomColors = async (target: string) => {
     while (true) {
       const color = getRandomColor(); // Generate a random color
       await animate(
@@ -45,23 +31,13 @@ export default function Home() {
       );
     }
   };
-  
-  useEffect(() => 
-  
-  {
 
+  useEffect(() => {
     animateWithRandomColors(".first");
     animateWithRandomColors(".second");
     animateWithRandomColors(".third");
     animateWithRandomColors(".fourth");
     animateWithRandomColors(".fifth");
-
-
-
-  
-
-    
-
   }, []);
 
   return (
@@ -179,13 +155,14 @@ export default function Home() {
               height="259"
             ></rect>
             <path
-            fill="purple"
+              fill="purple"
               className=" fifth"
               d="M59.79,16.12h74v259h-78v-255C55.79,17.92,57.59,16.12,59.79,16.12z"
             ></path>
           </g>
           <path
-            className="fill-[#C9C8CC]"
+          fill="#c9c8cc"
+         
             d="M9.79,285.22h480l0,0c0,5.5-4.5,10-10,10h-460C14.29,295.22,9.79,290.72,9.79,285.22L9.79,285.22z"
           ></path>
         </svg>
