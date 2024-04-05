@@ -1,14 +1,71 @@
 "use client";
 
 import { BLUR_BUTTON_VARIANT, FADE_DOWN_ANIMATION_VARIANTS } from "@/variant";
-import { motion } from "framer-motion";
+import { motion, useAnimate } from "framer-motion";
 import Link from "next/link";
 import { useSession } from "@clerk/nextjs";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { isSignedIn , isLoaded } = useSession();
+  const { isSignedIn, isLoaded } = useSession();
+
+  const [scope, animate] = useAnimate();
+
+  const colors = [
+    "#FF0000", // Red
+    "#00FF00", // Lime
+    "#0000FF", // Blue
+    "#FFFF00", // Yellow
+    "#FF00FF", // Fuchsia
+    "#00FFFF", // Aqua
+    "#FFA500", // Orange
+    "#800080", // Purple
+    "#008080", // Teal
+    "#808080", // Gray
+  ];
+
+
+  const getRandomColor = () => {
+    // Generate a random hexadecimal color
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  };
+  
+  const animateWithRandomColors = async (target:string) => {
+    while (true) {
+      const color = getRandomColor(); // Generate a random color
+      await animate(
+        target,
+        {
+          fill: color,
+        },
+        {
+          duration: 0.3,
+          delay: 0.4,
+        }
+      );
+    }
+  };
+  
+  useEffect(() => 
+  
+  {
+
+    animateWithRandomColors(".first");
+    animateWithRandomColors(".second");
+    animateWithRandomColors(".third");
+    animateWithRandomColors(".fourth");
+    animateWithRandomColors(".fifth");
+
+
+
+  
+
+    
+
+  }, []);
+
   return (
-    <main className="flex  lg:flex-row  flex-col-reverse  items-center justify-around   p-24">
+    <main className="flex  lg:flex-row  flex-col-reverse  items-center justify-around   lg:p-24">
       <motion.div
         className="w-[calc(100% - 1100px + 180px)]"
         initial="hidden"
@@ -78,7 +135,10 @@ export default function Home() {
         </div>
       </motion.div>
 
-      <div className="w-1/2 xl:p-32 lg:mb-0 mb-10 xl:mt-0 lg:mt-32 mt-5  ">
+      <div
+        ref={scope}
+        className="w-2/3 xl:p-32 p-2 lg:mb-0 mb-10 xl:mt-0 lg:mt-32 mt-5  "
+      >
         <svg
           version="1.1"
           id="homepage_hero_image-mobile"
@@ -92,32 +152,35 @@ export default function Home() {
           <path d="M450.79,288.72V20.22c0.1-7.6-6.1-13.9-13.8-14c0,0,0,0-0.1,0H59.59c-7.7,0.1-13.9,6.3-13.9,13.9c0,0,0,0,0,0.1v268.5 H450.79z"></path>
           <g id="homepage_hero-generator-laptop-mobile">
             <path
-              className="fill-lime-600"
+              className="first"
               d="M324.79,16.12h112c2.2,0,4,1.8,4,4v255h-116V16.12z"
             ></path>
             <rect
               x="249.79"
               y="16.12"
-              className="fill-orange-700"
+              fill="yellow"
+              className=" second"
               width="115"
               height="259"
             ></rect>
             <rect
               x="171.79"
               y="16.12"
-              className="fill-green-500"
+              fill="pink"
+              className=" third"
               width="115"
               height="259"
             ></rect>
             <rect
               x="94.79"
               y="16.12"
-              className="fill-stone-300"
+              className=" fourth"
               width="116"
               height="259"
             ></rect>
             <path
-              className="fill-purple-900"
+            fill="purple"
+              className=" fifth"
               d="M59.79,16.12h74v259h-78v-255C55.79,17.92,57.59,16.12,59.79,16.12z"
             ></path>
           </g>
