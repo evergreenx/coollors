@@ -55,7 +55,13 @@ export default function Palette({
   const handlesetColor = (color: string, index: number) => {
     console.log(color);
 
+    if (!color) {
+      setNewColorPalettes(["fff", "ddd"]);
+    }
+
     const newColor = color.replace(/^#/, "");
+
+    console.log(newColor);
     if (newColor) {
       const newColors = [...colors];
 
@@ -71,13 +77,17 @@ export default function Palette({
 
   const navigate = useRouter();
 
+  // click outside color picker
   const onClickOutside = () => {
-    console.log(newColorPalettes);
+    console.log(newColorPalettes); 
 
-    const newRoute = newColorPalettes.join("-");
+    // replace route if newcolorpalettes is selected
+    if (newColorPalettes.length) {
+      const newRoute = newColorPalettes.join("-");
 
-    console.log(newRoute);
-    navigate.replace(`/color/${newRoute}`);
+      console.log(newRoute);
+      navigate.replace(`/color/${newRoute}`);
+    }
 
     setShowColorPicker(false);
   };
